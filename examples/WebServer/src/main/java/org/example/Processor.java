@@ -7,10 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-/**
- * Processor of HTTP request.
- */
-public class Processor {
+public class Processor implements Runnable{
     private final Socket socket;
     private final HttpRequest request;
 
@@ -20,6 +17,7 @@ public class Processor {
     }
 
     public void countingOccurenceOfLetters() throws FileNotFoundException {
+        System.out.println("countingOccurenceOfLetters() function runned!");
         Scanner input = new Scanner(new File("C:\\Users\\yerzh\\Downloads\\abc.txt"));
         while (input.hasNextLine()) {
             String answer = input.nextLine();
@@ -32,16 +30,17 @@ public class Processor {
                     count++;
                 }
             }
-            System.out.println("a - " + count);
+//            System.out.println("a - " + count);
         }
     }
 
     public void primesUpToN(int N)
     {
+//        System.out.print("primesUpToN() function runned!");
         int x, y, flg;
-        System.out.println(
-                "All the Prime numbers within 1 and " + N
-                        + " are:");
+//        System.out.println(
+//                "All the Prime numbers within 1 and " + N
+//                        + " are:");
         for (x = 1; x <= N; x++) {
             if (x == 1 || x == 0)
                 continue;
@@ -52,8 +51,9 @@ public class Processor {
                     break;
                 }
             }
-            if (flg == 1)
-                System.out.print(x + " ");
+            if (flg == 1) {
+//                System.out.print(x + " ");
+            }
         }
     }
 
@@ -67,8 +67,8 @@ public class Processor {
         countingOccurenceOfLetters();
 
         //increasing response time by prime of numbers
-        for (int i = 0; i < 999; i++) {
-            primesUpToN((int) (Math.random() * (99 + 1)));
+        for (int i = 0; i < 9999; i++) {
+            primesUpToN((int) (Math.random() * (999 + 1)));
         }
 
         //different response for different requests
@@ -121,6 +121,15 @@ public class Processor {
             output.println("</html>");
             output.flush();
             socket.close();
+        }
+    }
+
+    @Override
+    public void run() {
+        try {
+            process();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
